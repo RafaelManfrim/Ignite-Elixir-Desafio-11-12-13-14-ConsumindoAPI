@@ -2,14 +2,9 @@ defmodule Apiconsumer.Users.Create do
   alias Apiconsumer.{Error, Repo, User}
 
   def call(params) do
-    changeset = User.changeset(params)
-
-    with {:ok, %User{}} <- User.build(changeset),
-         {:ok, %User{}} = user <- Repo.insert(changeset) do
-      user
-    else
-      {:error, %Error{}} = error -> error
-      {:error, result} -> {:error, Error.build(:bad_request, result)}
-    end
+    params |> User.changeset() |> Repo.insert() |> handle_insert()
   end
+
+  defp handle_insert({:ok, %User{}} = result), do: result
+  defp handle_insert({:error, result}), do: {:error, Error.build(:bad_request, result)}
 end

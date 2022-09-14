@@ -4,8 +4,7 @@ defmodule ApiconsumerWeb.UsersView do
 
   def render("create.json", %{token: token, user: %User{} = user}) do
     %{
-      message: "User created!",
-      user: user,
+      id: user.id,
       token: token
     }
   end
