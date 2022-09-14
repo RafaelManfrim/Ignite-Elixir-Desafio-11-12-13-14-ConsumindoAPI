@@ -10,6 +10,17 @@ use Mix.Config
 config :apiconsumer,
   ecto_repos: [Apiconsumer.Repo]
 
+config :apiconsumer, Apiconsumer.Repo,
+  migration_primary_key: [type: :binary_id]
+
+config :apiconsumer, ApiconsumerWeb.Auth.Guardian,
+  issuer: "apiconsumer",
+  secret_key: "1X0UoLUYs4tDhN/l3lWFsNrs6hX1gWFxzzliMf0KCYGQnq4GTysD6JIdJXA2ct/f"
+
+config :apiconsumer, ApiconsumerWeb.Auth.Pipeline,
+  module: ApiconsumerWeb.Auth.Guardian,
+  error_handler: ApiconsumerWeb.Auth.ErrorHandler
+
 # Configures the endpoint
 config :apiconsumer, ApiconsumerWeb.Endpoint,
   url: [host: "localhost"],

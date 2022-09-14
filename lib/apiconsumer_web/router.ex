@@ -1,14 +1,27 @@
 defmodule ApiconsumerWeb.Router do
   use ApiconsumerWeb, :router
+  alias ApiconsumerWeb.Plugs.UUIDChecker
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug UUIDChecker
+  end
+
+  pipeline :auth do
+    plug ApiconsumerWeb.Auth.Pipeline
+  end
+
+  scope "/api", ApiconsumerWeb do
+    pipe_through [:api, :auth]
+
+    get "/fetch_github/:username", GitHubController, :fetch
   end
 
   scope "/api", ApiconsumerWeb do
     pipe_through :api
 
-    get "/fetch_github/:username", GitHubController, :fetch
+    post "users", UsersController, :create
+    post "/users/login", UsersController, :sign_in
   end
 
   # Enables LiveDashboard only for development

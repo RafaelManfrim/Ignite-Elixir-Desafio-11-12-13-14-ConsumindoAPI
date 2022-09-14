@@ -55,6 +55,8 @@ defmodule Apiconsumer.MixProject do
       {:hackney, "~> 1.17"},
       {:bypass, "~> 2.1", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
+      {:guardian, "~> 2.0"},
+      {:pbkdf2_elixir, "~> 2.0"}
     ]
   end
 

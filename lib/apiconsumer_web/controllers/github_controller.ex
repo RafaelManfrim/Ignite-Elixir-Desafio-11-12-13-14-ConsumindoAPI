@@ -1,7 +1,6 @@
 
 defmodule ApiconsumerWeb.GitHubController do
   use ApiconsumerWeb, :controller
-  alias Apiconsumer.Error
   alias ApiconsumerWeb.FallbackController
 
   action_fallback FallbackController
